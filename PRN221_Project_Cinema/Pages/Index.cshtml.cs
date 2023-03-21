@@ -18,18 +18,27 @@ namespace PRN221_Project_Cinema.Pages
 
         [ViewData]
         public List<Genre> Genres { get; set; }
-        [FromQuery]
+        
+        [FromQuery(Name="id")]
         public string GenreId { get; set; }
+        
+        [BindProperty(SupportsGet = true)]
+        public string film { get; set; }
 
         public void OnGet()
         {
             Movies = _context.Movies.ToList();
             Genres = _context.Genres.ToList();
 
-            if (GenreId != null)
+            if (!string.IsNullOrEmpty(GenreId))
             {
                 Movies = _context.Movies
                     .Where(m => m.GenreId == int.Parse(GenreId))
+                    .ToList();
+            }
+            if (!string.IsNullOrEmpty(film))
+            {
+                Movies = _context.Movies.Where(m => m.Title.Contains(film))
                     .ToList();
             }
             else

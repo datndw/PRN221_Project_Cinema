@@ -1,4 +1,5 @@
 ﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using PRN221_Project_Cinema.Models;
 @model IndexModel
 @{
@@ -21,29 +22,43 @@
             </ul>
         </div>
 
-        <div class="col-8">
+        <div class="col-8 container">
             <h1>Movie List</h1>
-            @*Search by name*@
-           @* <form>
-                <p>
-                    Title: <input class="form-control" type="text" asp-for="SearchQuery" />
-                    <input type="submit" value="Filter" />
-                </p>
-            </form>*@
 
-            
-
-            @foreach (var movie in Model.Movies)
-            {
-                <div class="product">
-                    <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">
-                        <img src="@movie.Image" class="img-fluid" />
-                    </a>
-                    <div class="name">
-                        <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+            <div class="mb-3">
+                <form>
+                    <div class="d-inline-flex">
+                        <input type="text" class="form-control" asp-for="film"  placeholder="Search your movie">
+                        <button type="submit" class="btn btn-primary mx-2">Search</button>
                     </div>
-                </div>
-            }
+                </form>
+            </div>
+
+            <div class="row">
+
+                @foreach (var movie in Model.Movies)
+                {
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="my-5">
+                            <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">
+                                <img src="https://image.tmdb.org/t/p/w500/@movie.Image" class="img-fluid" />
+                            </a>
+                            <div class="name">
+                                <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (Model.Movies.Count == 0)
+                {
+                    <div class="alert alert-warning" role="alert">
+                        No movie found
+                    </div>
+                }
+
+            </div>
+
         </div>
     </div>
 
