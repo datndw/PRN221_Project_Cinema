@@ -9,12 +9,12 @@
 <main class="container">
     <div class="row">
         <div class="col-4">
-            <h2>Category</h2>
+            <h2>Thể loại</h2>
             <ul>
                 @foreach (var item in ViewBag.Genres as List<Genre>)
                 {
-                    <li class="list-unstyled">
-                        <a asp-route-id="@item.GenreId">
+                    <li>
+                        <a class="text-decoration-none" asp-route-id="@item.GenreId">
                             @item.Description
                         </a>
                     </li>
@@ -23,12 +23,10 @@
         </div>
 
         <div class="col-8 container">
-            <h1>Movie List</h1>
-
             <div class="mb-3">
                 <form>
                     <div class="d-inline-flex">
-                        <input type="text" class="form-control" asp-for="film"  placeholder="Search your movie">
+                        <input type="text" class="form-control" asp-for="film" placeholder="Search your movie">
                         <button type="submit" class="btn btn-primary mx-2">Search</button>
                     </div>
                 </form>
@@ -39,12 +37,20 @@
                 @foreach (var movie in Model.Movies)
                 {
                     <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="my-5">
-                            <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">
-                                <img src="https://image.tmdb.org/t/p/w500/@movie.Image" class="img-fluid" />
+                        <div class="card my-5">
+                            <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">
+                                <img src="https://image.tmdb.org/t/p/w500/@movie.Image" class="card-img-top" />
                             </a>
-                            <div class="name">
-                                <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a class="text-decoration-none" asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+                                </h5>
+                                <p class="card-text">
+                                    Năm: @movie.Year <br />
+                                    Loại: @movie.Genre.Description <br />
+                                    Điểm: @movie.Rates.Average(r=>r.NumericRating)
+                                </p>
+                                <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mx-auto">Đánh giá</a>
                             </div>
                         </div>
                     </div>
