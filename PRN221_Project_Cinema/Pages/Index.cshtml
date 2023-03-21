@@ -11,9 +11,9 @@
         <div class="col-4">
             <h2>Category</h2>
             <ul>
-                @foreach (var item in ViewBag.genres as List<Genre>)
+                @foreach (var item in ViewBag.Genres as List<Genre>)
                 {
-                    <li>
+                    <li class="list-unstyled">
                         <a asp-route-id="@item.GenreId">
                             @item.Description
                         </a>

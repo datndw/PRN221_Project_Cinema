@@ -24,26 +24,22 @@ namespace PRN221_Project_Cinema.Pages
         
         [BindProperty(SupportsGet = true)]
         public string film { get; set; }
-
+        
         public void OnGet()
         {
-            Movies = _context.Movies.ToList();
             Genres = _context.Genres.ToList();
+            Movies = _context.Movies.ToList();
 
             if (!string.IsNullOrEmpty(GenreId))
             {
-                Movies = _context.Movies
+                Movies = Movies
                     .Where(m => m.GenreId == int.Parse(GenreId))
                     .ToList();
             }
             if (!string.IsNullOrEmpty(film))
             {
-                Movies = _context.Movies.Where(m => m.Title.Contains(film))
+                Movies = Movies.Where(m => m.Title.Contains(film))
                     .ToList();
-            }
-            else
-            {
-                Movies = _context.Movies.ToList();
             }
         }
         
