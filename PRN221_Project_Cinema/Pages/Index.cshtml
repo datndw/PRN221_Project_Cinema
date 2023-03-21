@@ -1,10 +1,50 @@
 ﻿@page
+@using PRN221_Project_Cinema.Models;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<main class="container">
+    <div class="row">
+        <div class="col-4">
+            <h2>Category</h2>
+            <ul>
+                @foreach (var item in ViewBag.genres as List<Genre>)
+                {
+                    <li>
+                        <a asp-route-id="@item.GenreId">
+                            @item.Description
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="col-8">
+            <h1>Movie List</h1>
+            @*Search by name*@
+           @* <form>
+                <p>
+                    Title: <input class="form-control" type="text" asp-for="SearchQuery" />
+                    <input type="submit" value="Filter" />
+                </p>
+            </form>*@
+
+            
+
+            @foreach (var movie in Model.Movies)
+            {
+                <div class="product">
+                    <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">
+                        <img src="@movie.Image" class="img-fluid" />
+                    </a>
+                    <div class="name">
+                        <a asp-page="./Product/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</main>
