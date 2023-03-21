@@ -1,0 +1,47 @@
+﻿@page
+@model PRN221_Project_Cinema.Pages.Movies.DetailModel
+@{
+}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-4">
+            <img class="img-fluid mt-1"
+                 src=@("https://image.tmdb.org/t/p/w500"+Model.Movie.Image)
+                 alt="Avatar" />
+        </div>
+        <div class="col-8">
+            <h1>@Model.Movie.Title</h1>
+            <span class="fw-bold">Thể loại:</span>
+            <span>@Model.Movie.Genre.Description</span>
+            <br />
+            <span class="fw-bold">Điểm đánh giá:</span>
+            <span>@Model.RateList.Average(r=>r.NumericRating)</span>
+            <br />
+            <span class="fw-bold">Mô tả:</span>
+            <span>
+                @Model.Movie.Description
+            </span>
+            <hr />
+
+            <h2>Chi tiết đánh giá:</h2>
+            <span>Điểm đánh giá: </span>
+            <input class="d-inline mx-4" type="number" /><br />
+            <span>Bình luận:</span>
+            <textarea style="height: 100px" class="w-100 d-block"></textarea>
+            <button type="button" class="btn btn-primary mt-2 mb-4">Đánh giá</button>
+            <hr />
+
+            <h2>Bình luận:</h2>
+            @foreach (var item in Model.RateList)
+            {
+                <span class="fw-bold">@item.Person.Fullname :</span>
+                <span>
+                    @item.Comment
+                </span>
+            }
+        </div>
+    </div>
+</div>
+
+
