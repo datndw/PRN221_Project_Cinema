@@ -28,8 +28,8 @@ namespace PRN221_Project_Cinema.Pages
             if (!string.IsNullOrEmpty(PersonSearch))
             {
                 Persons = Persons.Where(p => p.Fullname
-                .ToLower()
-                .Contains(PersonSearch.ToLower()))
+                    .ToLower()
+                    .Contains(PersonSearch.ToLower()))
                     .ToList();
             }
         }
