@@ -1,0 +1,49 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model PRN221_Project_Cinema.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Login to Cinema Hub";
+}
+
+
+<div class="w-50 py-5 mx-auto">
+    <h3 class="mb-4 text-center">Sign in and enjoy the best movies</h3>
+    <form action="">
+        <div class="mb-2">
+            <label class="form-label fw-bold">Full Name *</label>
+            <input class="form-control"
+                   type="text"
+                   placeholder="Enter your name"
+                   asp-for="@Model.person.Fullname" />
+            <span class="msg-error" asp-validation-for="@Model.person.Fullname"></span><br />
+        </div>
+        <div class="mb-2">
+            <label class="form-label fw-bold">Email Address *</label>
+            <input class="form-control"
+                   type="email"
+                   placeholder="Enter email address"
+                   asp-for="@Model.person.Email" />
+            <span class="msg-error" asp-validation-for="@Model.person.Email"></span><br />
+        </div>
+        <div class="mb-2 w-25">
+            <label class="form-label fw-bold">Gender</label>
+            <select asp-for="@Model.person.Gender" class="form-select" name="gender">
+                <option selected>Select...</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label class="form-label fw-bold">Password *</label>
+            <input class="form-control"
+                   type="password"
+                   placeholder="*******"
+                   asp-for="@Model.person.Password" />
+            <span class="msg-error" asp-validation-for="@Model.person.Password"></span><br />
+        </div>
+       
+        <input class="btn w-100 btn-primary shadow" type="submit" value="Register" />
+
+    </form>
+</div>

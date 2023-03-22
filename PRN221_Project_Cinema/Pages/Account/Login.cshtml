@@ -1,0 +1,73 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model PRN221_Project_Cinema.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login to Cinema Hub";
+}
+
+<section class="bg-info-light position-relative overflow-hidden">
+
+    <div class="container position-relative">
+        <div class="mw-6xl mx-auto">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-6 position-relative">
+                    <div class="position-relative mw-md mx-auto py-5">
+                        <h3 class="mb-4">Sign in and enjoy the best movies</h3>
+                        <h6 class="mb-2">Why should you join us?</h6>
+                        <div class="d-flex mw-xs mb-2 align-items-start">
+                            <span>
+                                <svg width="25" height="26" viewbox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 23C18.0228 23 22.5 18.5228 22.5 13C22.5 7.47715 18.0228 3 12.5 3C6.97715 3 2.5 7.47715 2.5 13C2.5 18.5228 6.97715 23 12.5 23ZM17.1339 11.3839C17.622 10.8957 17.622 10.1043 17.1339 9.61612C16.6457 9.12796 15.8543 9.12796 15.3661 9.61612L11.25 13.7322L9.63388 12.1161C9.14573 11.628 8.35427 11.628 7.86612 12.1161C7.37796 12.6043 7.37796 13.3957 7.86612 13.8839L10.3661 16.3839C10.8543 16.872 11.6457 16.872 12.1339 16.3839L17.1339 11.3839Z" fill="#4F46E5"></path>
+                                </svg>
+                            </span>
+                            @*advantages for using the movie website*@
+                            <span class="ms-2">Stream your favorite movies from anywhere, anytime with our easy-to-use movie web app</span>
+                        </div>
+                        <div class="d-flex mw-xs align-items-start">
+                            <span>
+                                <svg width="25" height="26" viewbox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 23C18.0228 23 22.5 18.5228 22.5 13C22.5 7.47715 18.0228 3 12.5 3C6.97715 3 2.5 7.47715 2.5 13C2.5 18.5228 6.97715 23 12.5 23ZM17.1339 11.3839C17.622 10.8957 17.622 10.1043 17.1339 9.61612C16.6457 9.12796 15.8543 9.12796 15.3661 9.61612L11.25 13.7322L9.63388 12.1161C9.14573 11.628 8.35427 11.628 7.86612 12.1161C7.37796 12.6043 7.37796 13.3957 7.86612 13.8839L10.3661 16.3839C10.8543 16.872 11.6457 16.872 12.1339 16.3839L17.1339 11.3839Z" fill="#4F46E5"></path>
+                                </svg>
+                            </span>
+                            <span class="ms-2">Discover new titles and watch with friends with our movie web app's extensive library </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <div class="mw-md py-5 mx-auto">
+                        <form action="">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Email Address *</label>
+                                <input class="form-control"
+                                       type="email"
+                                       placeholder="Enter email address"
+                                       asp-for="@Model.person.Email" />
+                                <span class="msg-error" asp-validation-for="@Model.person.Email"></span><br />
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Password *</label>
+                                <input class="form-control"
+                                       type="password"
+                                       placeholder="*******"
+                                       asp-for="@Model.person.Password" />
+                                <span class="msg-error" asp-validation-for="@Model.person.Password"></span><br />
+                            </div>
+                            <div class="d-flex mb-5 flex-wrap align-items-center justify-content-between">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="" />
+                                    <label class="form-check-label fs-9" for="">Remember Me</label>
+                                </div>
+                                <div>
+                                    <a class="btn p-0 btn-link fs-9" href="#">Forgot Password?</a>
+                                </div>
+                            </div>
+                            <input class="btn w-100 btn-primary shadow" type="submit" value="Sign In" />
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
