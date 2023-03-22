@@ -49,7 +49,7 @@
                                     Năm: @movie.Year <br />
                                     Loại: @movie.Genre.Description <br />
                                     Điểm: @movie.Rates.Average(r=>r.NumericRating)
-                                </p>
+                                </p>                              
                                 <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mx-auto">Đánh giá</a>
                             </div>
                         </div>

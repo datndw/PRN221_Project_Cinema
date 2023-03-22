@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace PRN221_Project_Cinema.Models
 {
@@ -13,7 +14,11 @@ namespace PRN221_Project_Cinema.Models
         public int PersonId { get; set; }
         public string? Fullname { get; set; }
         public string? Gender { get; set; }
+
+        [Required(ErrorMessage ="Email không để trống")]
         public string? Email { get; set; }
+
+        [Required(ErrorMessage ="Mật khẩu không để trống")]
         public string? Password { get; set; }
         public int? Type { get; set; }
         public bool? IsActive { get; set; }

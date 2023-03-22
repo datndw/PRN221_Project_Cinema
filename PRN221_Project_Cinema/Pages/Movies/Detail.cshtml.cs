@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
 
         [FromQuery(Name = "id")]
         public int MovieId { get; set; }
+
         public IActionResult OnGet()
         {
             if (MovieId == null)
