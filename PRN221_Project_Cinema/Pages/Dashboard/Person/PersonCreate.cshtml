@@ -1,0 +1,56 @@
+﻿@page "/dashboard/person/create"
+@model PRN221_Project_Cinema.Pages.PersonCreateModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Create Account";
+}
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Person.Fullname" class="control-label"></label>
+                <input asp-for="Person.Fullname" class="form-control" />
+                <span asp-validation-for="Person.Fullname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Gender" class="control-label"></label>
+                <input asp-for="Person.Gender" class="form-control" />
+                <span asp-validation-for="Person.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Email" class="control-label"></label>
+                <input asp-for="Person.Email" class="form-control" />
+                <span asp-validation-for="Person.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Password" class="control-label"></label>
+                <input asp-for="Person.Password" class="form-control" />
+                <span asp-validation-for="Person.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.Type" class="control-label"></label>
+                <input asp-for="Person.Type" class="form-control" />
+                <span asp-validation-for="Person.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Person.IsActive" class="control-label"></label>
+                <input asp-for="Person.IsActive" class="form-control" />
+                <span asp-validation-for="Person.IsActive" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Person">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
