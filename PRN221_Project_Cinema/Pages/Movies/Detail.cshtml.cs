@@ -37,7 +37,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 .Include(r => r.Person)
                 .ToList();
 
-            CurrentRate = _context.Rates.Where(r => r.PersonId == 7).FirstOrDefault();
+            CurrentRate = _context.Rates.Where(r => r.PersonId == 7).Where(r=>r.MovieId==MovieId).FirstOrDefault();
 
             return Page();
         }

@@ -27,7 +27,7 @@
                 <form>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control" asp-for="film" placeholder="Search your movie">
-                        <button type="submit" class="btn btn-primary mx-2">Search</button>
+                        <button type="submit" class="btn btn-primary mx-2">Tìm kiếm</button>
                     </div>
                 </form>
             </div>
@@ -48,7 +48,7 @@
                                 <p class="card-text">
                                     Năm: @movie.Year <br />
                                     Loại: @movie.Genre.Description <br />
-                                    Điểm: @movie.Rates.Average(r=>r.NumericRating)
+                                    Điểm: @(movie.Rates == null?movie.Rates.Average(r=>r.NumericRating):"N/A")
                                 </p>
                                 <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mx-auto">Đánh giá</a>
                             </div>
