@@ -18,7 +18,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
         public List<Rate> RateList { get; set; }
 
         [BindProperty]
-        public Rate NewRate { get; set; }
+        public Rate CurrentRate { get; set; }
 
         [FromQuery(Name = "id")]
         public int MovieId { get; set; }
@@ -37,6 +37,8 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 .Include(r => r.Person)
                 .ToList();
 
+            CurrentRate = _context.Rates.Where(r => r.PersonId == 7).FirstOrDefault();
+
             return Page();
         }
 
@@ -48,9 +50,19 @@ namespace PRN221_Project_Cinema.Pages.Movies
             }
             else
             {
-                NewRate.MovieId = 315162;
-                NewRate.PersonId = 7;
-                _context.Add(NewRate);
+                if (CurrentRate == null)
+                {
+                    CurrentRate.MovieId = MovieId;
+                    CurrentRate.PersonId = 7;
+                    _context.Add(CurrentRate);
+                }
+                else
+                {
+                    var rate = _context.Rates.Where(r => r.PersonId == 7).FirstOrDefault();
+                    rate.NumericRating = CurrentRate.NumericRating;
+                    rate.Comment = CurrentRate.Comment;
+                    _context.Update(rate);
+                }
                 _context.SaveChanges();
             }
 
