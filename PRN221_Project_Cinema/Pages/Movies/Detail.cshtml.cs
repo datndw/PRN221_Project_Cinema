@@ -54,6 +54,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
             }
             else
             {
+                RawRate = _context.Rates.Where(r => r.PersonId == 7).Where(r => r.MovieId == MovieId).FirstOrDefault();
                 if (RawRate == null)
                 {
                     CurrentRate.MovieId = MovieId;
@@ -62,10 +63,9 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 }
                 else
                 {
-                    var rate = _context.Rates.Where(r => r.PersonId == 7).FirstOrDefault();
-                    rate.NumericRating = CurrentRate.NumericRating;
-                    rate.Comment = CurrentRate.Comment;
-                    _context.Rates.Update(rate);
+                    RawRate.NumericRating = CurrentRate.NumericRating;
+                    RawRate.Comment = CurrentRate.Comment;
+                    _context.Rates.Update(RawRate);
                 }
                 await _context.SaveChangesAsync();
                 await _hub.Clients.All.SendAsync("ReloadMovie", await _context.Rates.ToListAsync());
