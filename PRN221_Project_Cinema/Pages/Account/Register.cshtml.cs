@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +39,7 @@ namespace PRN221_Project_Cinema.Pages.Account
                 }
                 else
                 {
-                    ViewData["emailExist"] = "Email aready exist, please choose another!";
+                    ViewData["emailExist"] = "Email này đã tồn tại, Vui lòng lựa chọn email khác";
                     return Page();
                 }
 
