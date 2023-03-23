@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
 
@@ -8,10 +9,12 @@ namespace PRN221_Project_Cinema.Pages.Movies
     public class DetailModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;
+        private readonly IHubContext<CinemaHub> _hub;
 
-        public DetailModel(PRN221_Project_CinemaContext context)
+        public DetailModel(PRN221_Project_CinemaContext context, IHubContext<CinemaHub> hub)
         {
             _context = context;
+            _hub = hub;
         }
 
         public Movie Movie { get; set; }
@@ -19,6 +22,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
 
         [BindProperty]
         public Rate CurrentRate { get; set; }
+        public Rate RawRate { get; set; }
 
         [FromQuery(Name = "id")]
         public int MovieId { get; set; }
@@ -37,12 +41,12 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 .Include(r => r.Person)
                 .ToList();
 
-            CurrentRate = _context.Rates.Where(r => r.PersonId == 7).Where(r=>r.MovieId==MovieId).FirstOrDefault();
-
+            CurrentRate = _context.Rates.Where(r => r.PersonId == 7).Where(r => r.MovieId == MovieId).FirstOrDefault();
+            RawRate = CurrentRate;
             return Page();
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -50,7 +54,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
             }
             else
             {
-                if (CurrentRate == null)
+                if (RawRate == null)
                 {
                     CurrentRate.MovieId = MovieId;
                     CurrentRate.PersonId = 7;
@@ -63,7 +67,8 @@ namespace PRN221_Project_Cinema.Pages.Movies
                     rate.Comment = CurrentRate.Comment;
                     _context.Update(rate);
                 }
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+                await _hub.Clients.All.SendAsync("ReloadMovie", await _context.Movies.ToListAsync());
             }
 
             return RedirectToPage("./Detail", new { id = MovieId.ToString() });
