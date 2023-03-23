@@ -22,13 +22,13 @@
                             <a class="nav-link active" aria-current="page" href="/Index">Home</a>
                         </li>
                     </ul>
-                    
-                        <button class="btn btn-outline-success" onclick="window.location.href='/Account/Login'" type="submit">
-                           Login
-                            </button>
+
+                    <button class="btn btn-outline-success" onclick="window.location.href='/Account/Login'" type="submit">
+                        Login
+                    </button>
                     <button class="btn btn-success" onclick="window.location.href='/Account/Register'" type="submit">
-                            Register
-                            </button>
+                        Register
+                    </button>
                 </div>
             </div>
         </nav>
@@ -48,6 +48,7 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
