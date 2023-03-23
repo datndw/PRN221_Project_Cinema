@@ -36,21 +36,24 @@
 
                 @foreach (var movie in Model.Movies)
                 {
-                    <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 d-flex">
                         <div class="card my-5">
                             <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">
                                 <img src="https://image.tmdb.org/t/p/w500/@movie.Image" class="card-img-top" />
                             </a>
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <a class="text-decoration-none" asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
-                                </h5>
-                                <p class="card-text">
-                                    Năm: @movie.Year <br />
-                                    Loại: @movie.Genre.Description <br />
-                                    Điểm: @(movie.Rates == null?movie.Rates.Average(r=>r.NumericRating):"N/A")
-                                </p>
-                                <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mx-auto">Đánh giá</a>
+                            <div class="card-body d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <h5 class="card-title">
+                                        <a class="text-decoration-none" asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+                                    </h5>
+                                    <p class="card-text">
+                                        Năm: @movie.Year <br />
+                                        Loại: @movie.Genre.Description <br />
+                                        Điểm: @(movie.Rates == null ? movie.Rates.Average(r => r.NumericRating) : "N/A")
+                                    </p>
+                                </div>
+
+                                <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mt-2 w-100">Đánh giá</a>
                             </div>
                         </div>
                     </div>
