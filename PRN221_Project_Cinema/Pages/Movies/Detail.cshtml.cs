@@ -58,17 +58,17 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 {
                     CurrentRate.MovieId = MovieId;
                     CurrentRate.PersonId = 7;
-                    _context.Add(CurrentRate);
+                    _context.Rates.Add(CurrentRate);
                 }
                 else
                 {
                     var rate = _context.Rates.Where(r => r.PersonId == 7).FirstOrDefault();
                     rate.NumericRating = CurrentRate.NumericRating;
                     rate.Comment = CurrentRate.Comment;
-                    _context.Update(rate);
+                    _context.Rates.Update(rate);
                 }
                 await _context.SaveChangesAsync();
-                await _hub.Clients.All.SendAsync("ReloadMovie", await _context.Movies.ToListAsync());
+                await _hub.Clients.All.SendAsync("ReloadMovie", await _context.Rates.ToListAsync());
             }
 
             return RedirectToPage("./Detail", new { id = MovieId.ToString() });
