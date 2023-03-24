@@ -43,7 +43,17 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 .Include(r => r.Person)
                 .ToList();
 
-            CurrentRate = _context.Rates.Where(r => r.PersonId == 7).Where(r => r.MovieId == MovieId).FirstOrDefault();
+            var a = HttpContext.Session.GetString("email");
+            if (a != null)
+            {
+                Person person = _context.Persons.FirstOrDefault(x => x.Email == a);
+                if (person != null)
+                {
+                    CurrentRate = _context.Rates.Where(r => r.PersonId == person.PersonId).Where(r => r.MovieId == MovieId).FirstOrDefault();
+                }
+            }
+
+            
             return Page();
         }
 
@@ -62,11 +72,18 @@ namespace PRN221_Project_Cinema.Pages.Movies
             }
             else
             {
-                RawRate = _context.Rates.Where(r => r.PersonId == 7).Where(r => r.MovieId == MovieId).FirstOrDefault();
+                var a = HttpContext.Session.GetString("email");
+                Person person = null;
+                if (a != null) {
+                    person = await _context.Persons.FirstOrDefaultAsync(x => x.Email == a);
+                    RawRate = await _context.Rates.Where(r => r.PersonId == person.PersonId).Where(r => r.MovieId == MovieId).FirstOrDefaultAsync();
+                }
+
+                
                 if (RawRate == null)
                 {
                     CurrentRate.MovieId = MovieId;
-                    CurrentRate.PersonId = 7;
+                    CurrentRate.PersonId = person.PersonId;
                     _context.Rates.Add(CurrentRate);
                 }
                 else

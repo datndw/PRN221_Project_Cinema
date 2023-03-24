@@ -22,10 +22,17 @@ namespace PRN221_Project_Cinema.Pages.Account
             //var gender = Request.Form["gender"];
         }
 
-        public async Task<IActionResult> OnPost(Person? person)
+        public async Task<IActionResult> OnPost(Person? person,string? confirmPass)
         {
+            if(confirmPass != person.Password)
+            {
+                ViewData["passNotMatch"] = "Xác minh mật khẩu không trùng khớp";
+                return Page();
+            }
             if (ModelState.IsValid)
             {
+
+
                 var p = await _context.Persons.FirstOrDefaultAsync(x => x.Email == person.Email);
                 if (p == null)
                 {

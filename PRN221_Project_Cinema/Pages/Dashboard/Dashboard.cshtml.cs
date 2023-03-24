@@ -3,9 +3,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
 using PRN221_Project_Cinema.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221_Project_Cinema.Pages
 {
+    [Authorize(Roles = "Admin")] 
+    
     public class DashboardModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;

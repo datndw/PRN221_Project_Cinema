@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,9 +25,9 @@
                     </ul>
                     @if (Context.Session.GetString("email") != null)
                     {
-                        <p>Xin chào @Context.Session.GetString("fullname")</p>
+                        <span>Xin chào @Context.Session.GetString("fullname")</span>
                         <form asp-page="/Account/Login" method="post" asp-page-handler="Logout">
-                            <button class="btn btn-outline-success" type="submit">
+                            <button class="ml-2 btn btn-outline-success" type="submit">
                                 Logout
                             </button>
                         </form>

@@ -24,6 +24,7 @@ namespace PRN221_Project_Cinema.Pages.Account
 
         public async Task<IActionResult> OnPost(Person? person)
         {
+          
             if (ModelState.IsValid)
             {
                 Person p = _context.Persons.Where(x => x.Email == person.Email && x.Password == person.Password).FirstOrDefault();
@@ -44,8 +45,15 @@ namespace PRN221_Project_Cinema.Pages.Account
 
                     HttpContext.Session.SetString("email", p.Email);
                     HttpContext.Session.SetString("fullname", p.Fullname);
-                    
-                    return RedirectToPage("../Index");
+
+                    if (p.Type == 1)
+                    {
+                        return RedirectToPage("/Dashboard/Dashboard");
+                    }
+                    else
+                    {
+                        return RedirectToPage("../Index");
+                    }
                 }
                 else
                 {

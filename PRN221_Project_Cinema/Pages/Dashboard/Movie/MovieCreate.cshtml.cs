@@ -1,11 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.SignalR;
 using PRN221_Project_Cinema.Models;
+using System.Data;
 
 namespace PRN221_Project_Cinema.Pages
 {
+
+    [Authorize(Roles = "Admin")]
     public class MovieCreateModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;

@@ -29,6 +29,22 @@
                             <a class="nav-link text-light" asp-area="" asp-page="/Dashboard/Person/Person">Person</a>
                         </li>
                     </ul>
+
+                    @if (Context.Session.GetString("email") != null)
+                    {
+                        <span>Xin chào @Context.Session.GetString("fullname")</span>
+                        <form asp-page="/Account/Login" method="post" asp-page-handler="Logout">
+                            <button class="ml-2 btn btn-outline-dark" type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-success" onclick="window.location.href='/Account/Login'" type="submit">
+                            Login
+                        </button>
+                    }
                 </div>
             </div>
         </nav>

@@ -1,8 +1,10 @@
 ﻿@page
-@using Microsoft.AspNetCore.Mvc.RazorPages
 @model PRN221_Project_Cinema.Pages.Movies.DetailModel
 @{
 }
+
+@using Microsoft.AspNetCore.Http;
+
 
 <div class="container mt-3">
     <div class="row">
@@ -26,28 +28,26 @@
                 @Model.Movie.Description
             </span>
             <hr />
-
-            @if (Context.Session.GetString("email"))
+            @if (HttpContext.Session.GetString("email") != null)
             {
                 // todo: you have to login first
-            }
-            
-            <form method="post">
-                <h2>Chi tiết đánh giá:</h2>
-                <label asp-for="@Model.CurrentRate.NumericRating">Điểm đánh giá: </label>
-                <input asp-for="@Model.CurrentRate.NumericRating" class="d-inline mx-4" type="number" />
-                <br />
-                <span asp-validation-for="@Model.CurrentRate.NumericRating" class="text-danger"></span><br />
-                <label asp-for="@Model.CurrentRate.Comment">Bình luận:</label>
-                <textarea asp-for="@Model.CurrentRate.Comment" style="height: 100px" class="w-100 d-block">
-                </textarea>
-                <span asp-validation-for="@Model.CurrentRate.Comment" class="text-danger"></span>
-              
+                <form method="post">
+                    <h2>Chi tiết đánh giá:</h2>
+                    <label asp-for="@Model.CurrentRate.NumericRating">Điểm đánh giá: </label>
+                    <input asp-for="@Model.CurrentRate.NumericRating" class="d-inline mx-4" type="number" />
+                    <br />
+                    <span asp-validation-for="@Model.CurrentRate.NumericRating" class="text-danger"></span><br />
+                    <label asp-for="@Model.CurrentRate.Comment">Bình luận:</label>
+                    <textarea asp-for="@Model.CurrentRate.Comment" style="height: 100px" class="w-100 d-block">
+                        </textarea>
+                    <span asp-validation-for="@Model.CurrentRate.Comment" class="text-danger"></span>
 
-                <br />
-                <input type="submit" class="btn btn-primary mt-2 mb-4" value="Đánh giá" />
-            </form>
-            <hr />
+
+                    <br />
+                    <input type="submit" class="btn btn-primary mt-2 mb-4" value="Đánh giá" />
+                </form>
+                <hr />
+            }
 
             <h2>Bình luận:</h2>
             @if (Model.RateList == null)

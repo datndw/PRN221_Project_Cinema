@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221_Project_Cinema.Models;
+using System.Data;
 
 namespace PRN221_Project_Cinema.Pages
 {
+    [Authorize(Roles = "Admin")]
     public class PersonCreateModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;

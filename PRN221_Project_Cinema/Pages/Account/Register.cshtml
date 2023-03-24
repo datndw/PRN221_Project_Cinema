@@ -42,6 +42,15 @@
                    asp-for="@Model.person.Password" />
             <span class="text-danger" asp-validation-for="@Model.person.Password"></span><br />
         </div>
+
+        <div class="mb-4">
+            <label class="form-label fw-bold">Confirm password *</label>
+            <input class="form-control"
+                   type="password"
+                   placeholder="*******"
+                   name="confirmPass"/>
+            <span class="text-danger">@ViewData["passNotMatch"]</span><br />
+        </div>
        
         <input class="btn w-100 btn-primary shadow" type="submit" value="Register" />
 

@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
+using System.Data;
 
 namespace PRN221_Project_Cinema.Pages
 {
+
+    [Authorize(Roles = "Admin")]
     public class PersonStatusModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;
@@ -15,8 +19,9 @@ namespace PRN221_Project_Cinema.Pages
         }
 
         [BindProperty]
-        public bool? isChanged { get; set; } = false;
+        public bool? IsChanged { get; set; } = false;
 
+        [BindProperty]
         public Person Person { get; set; } 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -31,20 +36,23 @@ namespace PRN221_Project_Cinema.Pages
             {
                 return NotFound();
             }
-            isChanged = Person.IsActive;
+            IsChanged = Person.IsActive;
             //Person = person;
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             /* _context.Attach(Person).State = EntityState.Modified;*/
 
-            Person.IsActive = isChanged;
+            var person = await _context.Persons.FirstOrDefaultAsync(x => x.PersonId == Person.PersonId);
+
+            if (person == null)
+            {
+                return NotFound(nameof(Person));
+            }
+
+            person.IsActive = IsChanged;
+            Person = person;
 
             try
             {

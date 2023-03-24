@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
+using System.Security.Claims;
 
 namespace PRN221_Project_Cinema.Pages
 {
@@ -40,6 +41,21 @@ namespace PRN221_Project_Cinema.Pages
 
         public IActionResult OnGet(int page = 1)
         {
+
+            var identityValue = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identityValue.Claims;
+            if(claims.Any()) {
+                HttpContext.Session.SetString("email", claims.First().Value);
+                HttpContext.Session.SetString("fullname", claims.ElementAt(1).Value);
+                var role = claims.ElementAt(2).Value;
+
+                if (role == "Admin")
+                {
+                    return RedirectToPage("/Dashboard/Dashboard");
+                }
+            }
+
+           
             Movies = _context.Movies.ToList();
             const int pageSize = 6;
            

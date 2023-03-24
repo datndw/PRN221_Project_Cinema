@@ -1,11 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
+using System.Data;
 
 namespace PRN221_Project_Cinema.Pages
 {
+    [Authorize(Roles = "Admin")]
+
     public class MovieDeleteModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;
