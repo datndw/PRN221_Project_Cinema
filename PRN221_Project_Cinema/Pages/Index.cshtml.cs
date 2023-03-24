@@ -21,6 +21,9 @@ namespace PRN221_Project_Cinema.Pages
         [ViewData]
         public List<Genre> Genres { get; set; }
 
+        [ViewData]
+        public int totalMovies { get; set; }
+
         [FromQuery(Name = "id")]
         public string GenreId { get; set; }
 
@@ -29,23 +32,39 @@ namespace PRN221_Project_Cinema.Pages
 
         public List<Rate> RateList { get; set; }
 
-        public void OnGet()
-        {
-            Genres = _context.Genres.ToList();
-            Movies = _context.Movies.Include(m => m.Genre).Include(m => m.Rates).ToList();
+        [BindProperty]
+        public int TotalPages { get; set; }
 
-            if (!string.IsNullOrEmpty(GenreId))
-            {
-                Movies = Movies
-                    .Where(m => m.GenreId == int.Parse(GenreId))
-                    .ToList();
-            }
+        [FromQuery(Name = "page")]
+        public int CurrentPage { get; set; }
+
+        public IActionResult OnGet(int page = 1)
+        {
+            Movies = _context.Movies.ToList();
+            const int pageSize = 6;
+           
+
+            totalMovies = _context.Movies.Count();
+            // set the page to CurrentPage when user clicks another link
+            page = CurrentPage;
+
+            TotalPages = (int)Math.Ceiling(_context.Movies.Count() / 6.0);
+            Movies = Movies.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
             if (!string.IsNullOrEmpty(film))
             {
-                Movies = Movies.Where(m => m.Title.Contains(film))
-                    .ToList();
+                Movies = _context.Movies.Where(m => m.Title.Contains(film)).ToList();
             }
+            if (!string.IsNullOrEmpty(GenreId))
+            {
+                Movies = _context.Movies.Where(m => m.GenreId == int.Parse(GenreId)).ToList();
+            }
+            Genres = _context.Genres.ToList();
+            RateList = _context.Rates.ToList();
+
+            return Page();
         }
+       
 
     }
 }

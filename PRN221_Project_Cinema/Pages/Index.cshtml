@@ -27,30 +27,37 @@
                 <form>
                     <div class="d-inline-flex">
                         <input type="text" class="form-control" asp-for="film" placeholder="Search your movie">
-                        <button type="submit" class="btn btn-primary mx-2">Search</button>
+                        <button type="submit" class="btn btn-primary mx-2">Tìm kiếm</button>
                     </div>
                 </form>
             </div>
 
+            @*Show total number of movies*@
+            <div class="mb-2">
+                <h4>Tổng số phim: @ViewBag.TotalMovies</h4>
+            </div>
+            
             <div class="row">
-
                 @foreach (var movie in Model.Movies)
                 {
-                    <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="col-md-4 col-sm-6 d-flex">
                         <div class="card my-5">
                             <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">
                                 <img src="https://image.tmdb.org/t/p/w500/@movie.Image" class="card-img-top" />
                             </a>
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <a class="text-decoration-none" asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
-                                </h5>
-                                <p class="card-text">
-                                    Năm: @movie.Year <br />
-                                    Loại: @movie.Genre.Description <br />
-                                    Điểm: @movie.Rates.Average(r=>r.NumericRating)
-                                </p>                              
-                                <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mx-auto">Đánh giá</a>
+                            <div class="card-body d-flex flex-column justify-content-between p-3">
+                                <div>
+                                    <h5 class="card-title">
+                                        <a class="text-decoration-none" asp-page="./Movies/Detail" asp-route-id="@movie.MovieId">@movie.Title</a>
+                                    </h5>
+                                    <p class="card-text">
+                                        Năm: @movie.Year <br />
+                                        Loại: @movie.Genre.Description <br />
+                                        Điểm: @(movie.Rates == null ? movie.Rates.Average(r => r.NumericRating) : "N/A")
+                                    </p>
+                                </div>
+
+                                <a asp-page="./Movies/Detail" asp-route-id="@movie.MovieId" class="d-block btn btn-primary mt-2 w-100">Đánh giá</a>
                             </div>
                         </div>
                     </div>
@@ -65,6 +72,25 @@
 
             </div>
 
+            @if (Model.TotalPages > 0)
+            {
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item @(Model.CurrentPage == 0 ? "disabled" : "")">
+                        <a class="page-link" href="/Index?page=@(Model.CurrentPage-1)">Previous</a>
+                    </li>
+                   @for (int i = 1; i < Model.TotalPages + 1; i++)
+                    {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a href="?page=@i" class="page-link">@i</a>
+                        </li>
+                    }
+                        <li class="page-item @(Model.CurrentPage >= Model.TotalPages ? "disabled" : "")">
+                        <a class="page-link" href="/Index?page=@(Model.CurrentPage+1)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+            }
         </div>
     </div>
 

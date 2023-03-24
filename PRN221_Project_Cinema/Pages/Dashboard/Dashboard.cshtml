@@ -1,0 +1,195 @@
+﻿@page "/dashboard"
+@using System.Globalization;
+@model PRN221_Project_Cinema.Pages.DashboardModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Dashboard";
+}
+<div class="container">
+    <h2 class="fw-bold">Xin chào Admin, hãy xem bản báo cáo dưới đây</h2>
+
+    <section class="mb-5">
+
+        <div class="d-flex gap-5">
+            <h4 class="">
+                Tổng số phim: @Model.MovieCount
+            </h4>
+            <div>
+                @if (Model.Change >= 0)
+                {
+                    <span class="col-2 text-success">+@Model.Change%</span>
+                    <span>(So với @(DateTime.Now.Year - 1))</span>
+                }
+                else
+                {
+                    <span class="col-2 text-danger">@Model.Change%</span>
+                    <span>(So với @(DateTime.Now.Year - 1))</span>
+                }
+            </div>
+        </div>
+
+        <div class="d-flex gap-5">
+            <h4 class="">
+                Tổng số loại phim: @Model.GenreCount
+            </h4>
+            <div>
+                @if (Model.GenreCount >= 19)
+                {
+                    <span class="col-2 text-success ">+@(Model.GenreCount - 19)</span>
+                    <span>
+                        (So với ban đầu)
+                    </span>
+                }
+                else
+                {
+                    <div class="col-2 text-danger">@(Model.MovieCount - 19)</div>
+                    <span>(So với ban đầu)</span>
+                }
+            </div>
+        </div>
+
+        <div class="d-flex gap-5">
+            <h4 class="">
+                Tổng số người: @Model.PersonCount
+            </h4>
+            <div>
+                @if (Model.GenreCount >= 7)
+                {
+                    <span class="col-2 text-success ">+@(Model.PersonCount - 7) </span>
+                    <span> (@Model.ActivePersonCount Active)</span>
+                }
+                else
+                {
+                    <div class="col-2 text-danger ">@(Model.PersonCount - 7)</div>
+                    <span> (@Model.ActivePersonCount Active)</span>
+                }
+            </div>
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col">
+            <h4 class="text-center">Phim theo chủ đề</h4>
+            <canvas id="genreChart"></canvas>
+        </div>
+        <div class="col">
+            <h4 class="text-center">Top phim @DateTime.Now.ToString("MMMM", CultureInfo.CreateSpecificCulture("vi")) theo đánh giá</h4>
+            <canvas id="rateChart"></canvas>
+        </div>
+        <div class="col">
+            <h4 class="text-center">Người hoạt động sôi nổi</h4>
+            <canvas id="activePersonChart"></canvas>
+        </div>
+    </div>
+    <br />
+
+</div>
+
+
+
+
+@{
+    var genres = Model.GenresInfo.Select(el => el.Key).ToList();
+    var numbers = Model.GenresInfo.Select(el => el.Value).ToList();
+    var genresJson = Json.Serialize(genres);
+    var numbersJson = Json.Serialize(numbers);
+
+    var movies = Model.MovieRate.Select(el => el.Key).ToList();
+    var rates = Model.MovieRate.Select(el => el.Value).ToList();
+    var moviesJson = Json.Serialize(movies);
+    var ratesJson = Json.Serialize(rates);
+
+    var people = Model.PersonActiveData.Select(el => el.Key).ToList();
+    var pRates = Model.PersonActiveData.Select(el => el.Value).ToList();
+    var peopleJson = Json.Serialize(people);
+    var pRatesJson = Json.Serialize(pRates);
+
+}
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctxGenre = document.getElementById('genreChart');
+        const ctxRate = document.getElementById('rateChart');
+        var genres = JSON.parse('@genresJson');
+        var numbers = JSON.parse('@numbersJson');
+        var movies = JSON.parse('@moviesJson');
+        var rates = JSON.parse('@ratesJson');
+        var people = JSON.parse('@peopleJson');
+        var pRates = JSON.parse('@pRatesJson');
+        new Chart(ctxGenre, {
+            type: 'pie',
+            data: {
+                labels: genres,
+                datasets: [{
+                    label: 'Number of Movies',
+                    data: numbers,
+                    borderWidth: 1,
+                    backgroundColor: ['#BBD6B8', '#97DEFF', '#F7C04A', '#865DFF', '#DFFFD8', '#FFB84C', '#F7EFE5']
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: 'rgb(0, 0, 0)'
+                        }
+                    }
+                }
+            }
+        });
+        var barColors = ["blue", "green", "yellow", "orange", "red"];
+
+        new Chart("rateChart", {
+            type: "bar",
+            data: {
+                labels: movies,
+                datasets: [{
+                    barThickness: 40,
+                    minBarLength: 0,
+                    backgroundColor: barColors,
+                    data: rates
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        new Chart("activePersonChart", {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: 'Bar Dataset',
+                    data: pRates,
+                    // this dataset is drawn below
+                    order: 2
+                }],
+                labels: people
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+    </script>
+    }

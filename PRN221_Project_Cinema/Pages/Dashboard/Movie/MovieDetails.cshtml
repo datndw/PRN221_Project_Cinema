@@ -1,0 +1,39 @@
+﻿@page "/dashboard/movie/details"
+@model PRN221_Project_Cinema.Pages.MovieDetailsModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Movie Details";
+}
+<div class="container text-center">
+    <h3 class="my-4">Movie Details</h3>
+    <div>
+        <hr />
+        <table class="table table-bordered">
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Title)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Title)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Year)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Year)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Image)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Image)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Description)</td>
+                <td class="p-3 text-start">@Html.DisplayFor(model => model.Movie.Description)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Genre)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Genre.Description)</td>
+            </tr>
+        </table>
+
+        <div>
+            <a class="btn btn-warning" asp-page="./MovieEdit" asp-route-id="@Model.Movie?.MovieId">Edit This Movie</a> |
+            <a class="btn btn-primary" asp-page="./Movie">Back to Movie List</a>
+        </div>
+    </div>
+</div>
