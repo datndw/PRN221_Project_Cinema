@@ -18,7 +18,7 @@
                         </div>
                     </form>
                 </div>
-                <a class="mb-4" asp-page="/Dashboard/Movie/MovieCreate">Create New Movie</a>
+                <a class="mb-4 btn btn-primary" asp-page="/Dashboard/Movie/MovieCreate">Create New Movie</a>
             </div>
             <div class="row">
                 @if (Model.Movies.Count == 0)
@@ -30,7 +30,7 @@
                 else
                 {
                     <div class="row">
-                        <table class="table">
+                        <table class="table table-striped">
                             <thead class="thead-light">
                                 <tr>
                                     <th scope="col">ID</th>
@@ -45,14 +45,14 @@
                                 @foreach (var movie in Model.Movies)
                                 {
                                     <tr>
-                                        <td>@movie.MovieId</td>
-                                        <td><img style="max-height:160px" src="https://image.tmdb.org/t/p/w500/@movie.Image" class="img-fluid" /></td>
-                                        <td><a asp-page="./MovieDetails" asp-route-id="@movie.MovieId">@movie.Title</a></td>
-                                        <td>@movie.Year</td>
-                                        <td>@movie.Genre.Description</td>
-                                        <td>
-                                            <a asp-page="./MovieEdit" asp-route-id="@movie.MovieId">Edit</a> |
-                                            <a asp-page="./MovieDelete" asp-route-id="@movie.MovieId">Delete</a>
+                                        <td class="align-middle">@movie.MovieId</td>
+                                        <td class="align-middle"><img style="max-height:160px" src="https://image.tmdb.org/t/p/w500/@movie.Image" class="img-fluid" /></td>
+                                        <td class="align-middle"><a class="text-decoration-none fw-bold" asp-page="./MovieDetails" asp-route-id="@movie.MovieId">@movie.Title</a></td>
+                                        <td class="align-middle">@movie.Year</td>
+                                        <td class="align-middle">@movie.Genre.Description</td>
+                                        <td class="align-middle">
+                                            <a class="btn btn-outline-primary" asp-page="./MovieEdit" asp-route-id="@movie.MovieId">Edit</a> |
+                                            <a class="btn btn-outline-primary" asp-page="./MovieDelete" asp-route-id="@movie.MovieId">Delete</a>
                                         </td>
                                     </tr>
                                 }

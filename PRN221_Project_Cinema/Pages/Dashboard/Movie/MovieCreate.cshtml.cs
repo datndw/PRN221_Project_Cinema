@@ -21,7 +21,7 @@ namespace PRN221_Project_Cinema.Pages
        
         public IActionResult OnGet()
         {
-            ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "GenreId");
+            ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "Description");
             return Page();
         }
 

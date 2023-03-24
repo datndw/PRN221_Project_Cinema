@@ -33,7 +33,7 @@ namespace PRN221_Project_Cinema.Pages
                 return NotFound();
             }
             Movie = movie;
-            ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "GenreId");
+            ViewData["GenreId"] = new SelectList(_context.Genres, "GenreId", "Description");
             return Page();
         }
 

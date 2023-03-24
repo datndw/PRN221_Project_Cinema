@@ -25,7 +25,7 @@ namespace PRN221_Project_Cinema.Pages
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieId == id);
+            var movie = await _context.Movies.Include(m=>m.Genre).FirstOrDefaultAsync(m => m.MovieId == id);
 
             if (movie == null)
             {
