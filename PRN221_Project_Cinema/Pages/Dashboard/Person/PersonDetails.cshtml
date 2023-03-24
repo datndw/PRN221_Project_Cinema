@@ -1,0 +1,44 @@
+﻿@page "/dashboard/person/details"
+@model PRN221_Project_Cinema.Pages.PersonDetailsModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Account Details";
+}
+
+<div class="container text-center">
+    <h3 class="my-4">Account Details</h3>
+    <div>
+        <hr />
+        <table class="table table-bordered">
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Person.Fullname)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Person.Fullname)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Person.Gender)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Person.Gender)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Person.Email)</td>
+                <td class="p-3">@Html.DisplayNameFor(model => model.Person.Email)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Person.Password)</td>
+                <td class="p-3 text-start">@Html.DisplayFor(model => model.Person.Password)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Person.Type)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Person.Type)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Person.IsActive)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Person.IsActive)</td>
+            </tr>
+        </table>
+
+        <div>
+            <a class="btn btn-warning" asp-page="./PersonStatus" asp-route-id="@Model.Person?.PersonId">Update Status</a> |
+            <a class="btn btn-primary" asp-page="./Person">Back to Account List</a>
+        </div>
+    </div>
+</div>

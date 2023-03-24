@@ -1,0 +1,182 @@
+﻿@page "/dashboard"
+@using System.Globalization;
+@model PRN221_Project_Cinema.Pages.DashboardModel
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Dashboard";
+}
+<div class="container">
+    <h2 class="fw-bold">Welcome back, Admin! See my report below.</h2>
+    <br />
+    <div class="row">
+        <div class="col">
+            <h4 class="text-center">Number of active Movie</h4>
+            <canvas id="genreChart"></canvas>
+        </div>
+        <div class="col">
+            <h4 class="text-center">Leaders Of @DateTime.Now.ToString("MMMM", CultureInfo.CreateSpecificCulture("en"))</h4>
+            <canvas id="rateChart"></canvas>
+        </div>
+        <div class="col">
+            <h4 class="text-center">Most active Person</h4>
+            <canvas id="activePersonChart"></canvas>
+        </div>
+    </div>
+    <br />
+    <div class="row w-50">
+        <div class="col h4">
+            Total of Movies: @Model.MovieCount
+        </div>
+        @if (Model.Change >= 0)
+        {
+            <div class="col-2 text-success h4">+@Model.Change%</div>
+        }
+        else
+        {
+            <div class="col-2 text-danger h4">@Model.Change%</div>
+        }
+        <div class="col h4">
+            (Compare with @(DateTime.Now.Year - 1))
+        </div>
+    </div>
+    <div class="row w-50">
+        <div class="col h4">
+            Total of Genres: @Model.GenreCount
+        </div>
+        @if (Model.GenreCount >= 19)
+        {
+            <div class="col-2 text-success h4">+@(Model.GenreCount - 19)</div>
+        }
+        else
+        {
+            <div class="col-2 text-danger h4">@(Model.MovieCount - 19)</div>
+        }
+        <div class="col h4">
+            (Compare with origin)
+        </div>
+    </div>
+    <div class="row w-50">
+        <div class="col h4">
+            Total of Persons: @Model.PersonCount
+        </div>
+        @if (Model.GenreCount >= 7)
+        {
+            <div class="col-2 text-success h4">+@(Model.PersonCount - 7)</div>
+        }
+        else
+        {
+            <div class="col-2 text-danger h4">@(Model.PersonCount - 7)</div>
+        }
+        <div class="col h4">
+            (@Model.ActivePersonCount Active)
+        </div>
+    </div>
+</div>
+
+
+
+
+@{
+    var genres = Model.GenresInfo.Select(el => el.Key).ToList();
+    var numbers = Model.GenresInfo.Select(el => el.Value).ToList();
+    var genresJson = Json.Serialize(genres);
+    var numbersJson = Json.Serialize(numbers);
+
+    var movies = Model.MovieRate.Select(el => el.Key).ToList();
+    var rates = Model.MovieRate.Select(el => el.Value).ToList();
+    var moviesJson = Json.Serialize(movies);
+    var ratesJson = Json.Serialize(rates);
+
+    var people = Model.PersonActiveData.Select(el => el.Key).ToList();
+    var pRates = Model.PersonActiveData.Select(el => el.Value).ToList();
+    var peopleJson = Json.Serialize(people);
+    var pRatesJson = Json.Serialize(pRates);
+
+}
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctxGenre = document.getElementById('genreChart');
+        const ctxRate = document.getElementById('rateChart');
+        var genres = JSON.parse('@genresJson');
+        var numbers = JSON.parse('@numbersJson');
+        var movies = JSON.parse('@moviesJson');
+        var rates = JSON.parse('@ratesJson');
+        var people = JSON.parse('@peopleJson');
+        var pRates = JSON.parse('@pRatesJson');
+        new Chart(ctxGenre, {
+            type: 'pie',
+            data: {
+                labels: genres,
+                datasets: [{
+                    label: 'Number of Movies',
+                    data: numbers,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: 'rgb(0, 0, 0)'
+                        }
+                    }
+                }
+            }
+        });
+        var barColors = ["blue", "green", "yellow", "orange", "red"];
+
+        new Chart("rateChart", {
+            type: "bar",
+            data: {
+                labels: movies,
+                datasets: [{
+                    barThickness: 40,
+                    minBarLength: 0,
+                    backgroundColor: barColors,
+                    data: rates
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+        new Chart("activePersonChart", {
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: 'Bar Dataset',
+                    data: pRates,
+                    // this dataset is drawn below
+                    order: 2
+                }],
+                labels: people
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+    </script>
+}
