@@ -25,7 +25,7 @@ namespace PRN221_Project_Cinema.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-RURSNML;database=PRN221_Project_Cinema;uid=sa;password=123456");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;database=PRN221_Project_Cinema;uid=sa;password=123");
             }
         }
 
