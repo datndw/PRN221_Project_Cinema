@@ -15,6 +15,8 @@ namespace PRN221_Project_Cinema.Pages
         }
 
         [BindProperty]
+        public bool? isChanged { get; set; } = false;
+
         public Person Person { get; set; } 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -24,12 +26,13 @@ namespace PRN221_Project_Cinema.Pages
                 return NotFound();
             }
 
-            var person = await _context.Persons.FirstOrDefaultAsync(m => m.PersonId == id);
-            if (person == null)
+            Person = await _context.Persons.FirstOrDefaultAsync(m => m.PersonId == id);
+            if (Person == null)
             {
                 return NotFound();
             }
-            Person = person;
+            isChanged = Person.IsActive;
+            //Person = person;
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
@@ -39,10 +42,13 @@ namespace PRN221_Project_Cinema.Pages
                 return Page();
             }
 
-            _context.Attach(Person).State = EntityState.Modified;
+            /* _context.Attach(Person).State = EntityState.Modified;*/
+
+            Person.IsActive = isChanged;
 
             try
             {
+                _context.Persons.Update(Person);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
