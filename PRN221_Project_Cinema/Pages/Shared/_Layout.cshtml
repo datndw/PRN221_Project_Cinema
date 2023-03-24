@@ -25,6 +25,7 @@
                     </ul>
                     @if (Context.Session.GetString("email") != null)
                     {
+                        <p>Xin chào @Context.Session.GetString("fullname")</p>
                         <form asp-page="/Account/Login" method="post" asp-page-handler="Logout">
                             <button class="btn btn-outline-success" type="submit">
                                 Logout

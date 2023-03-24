@@ -35,7 +35,7 @@ namespace PRN221_Project_Cinema.Pages.Account
                     person.IsActive = true;
                     await _context.Persons.AddAsync(person);
                     await _context.SaveChangesAsync();
-                    return RedirectToPage("/Login");
+                    return RedirectToPage("./Login");
                 }
                 else
                 {

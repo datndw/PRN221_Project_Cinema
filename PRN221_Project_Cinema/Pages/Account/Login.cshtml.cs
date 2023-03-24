@@ -43,6 +43,8 @@ namespace PRN221_Project_Cinema.Pages.Account
                     });
 
                     HttpContext.Session.SetString("email", p.Email);
+                    HttpContext.Session.SetString("fullname", p.Fullname);
+                    
                     return RedirectToPage("../Index");
                 }
                 else
