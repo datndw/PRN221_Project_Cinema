@@ -20,6 +20,9 @@ namespace PRN221_Project_Cinema.Pages
         [ViewData]
         public List<Genre> Genres { get; set; }
 
+        [ViewData]
+        public int totalMovies { get; set; }
+
         [FromQuery(Name = "id")]
         public string GenreId { get; set; }
 
@@ -40,7 +43,7 @@ namespace PRN221_Project_Cinema.Pages
             const int pageSize = 6;
            
 
-            int totalMovies = _context.Movies.Count();
+            totalMovies = _context.Movies.Count();
             // set the page to CurrentPage when user clicks another link
             page = CurrentPage;
 

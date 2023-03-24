@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +42,6 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 .ToList();
 
             CurrentRate = _context.Rates.Where(r => r.PersonId == 7).Where(r => r.MovieId == MovieId).FirstOrDefault();
-            RawRate = CurrentRate;
             return Page();
         }
 
@@ -50,7 +49,14 @@ namespace PRN221_Project_Cinema.Pages.Movies
         {
             if (!ModelState.IsValid)
             {
-                ViewData["msg"] = "Please try again!";
+                Movie = await _context.Movies.Where(m => m.MovieId == MovieId)
+               .Include(m => m.Genre)
+               .FirstOrDefaultAsync();
+
+                RateList = await _context.Rates.Where(r => r.MovieId == MovieId)
+                .Include(r => r.Person)
+                .ToListAsync();
+                return Page();
             }
             else
             {

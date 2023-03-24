@@ -29,11 +29,11 @@
         </div>
         @if (Model.Change >= 0)
         {
-            <div class="col-2 text-success h4">+@Model.Change%</div>
+                    <div class="col-2 text-success h4">+@Model.Change%</div>
         }
         else
         {
-            <div class="col-2 text-danger h4">@Model.Change%</div>
+                    <div class="col-2 text-danger h4">@Model.Change%</div>
         }
         <div class="col h4">
             (Compare with @(DateTime.Now.Year - 1))
@@ -45,11 +45,11 @@
         </div>
         @if (Model.GenreCount >= 19)
         {
-            <div class="col-2 text-success h4">+@(Model.GenreCount - 19)</div>
+                    <div class="col-2 text-success h4">+@(Model.GenreCount - 19)</div>
         }
         else
         {
-            <div class="col-2 text-danger h4">@(Model.MovieCount - 19)</div>
+                    <div class="col-2 text-danger h4">@(Model.MovieCount - 19)</div>
         }
         <div class="col h4">
             (Compare with origin)
@@ -61,11 +61,11 @@
         </div>
         @if (Model.GenreCount >= 7)
         {
-            <div class="col-2 text-success h4">+@(Model.PersonCount - 7)</div>
+                    <div class="col-2 text-success h4">+@(Model.PersonCount - 7)</div>
         }
         else
         {
-            <div class="col-2 text-danger h4">@(Model.PersonCount - 7)</div>
+                    <div class="col-2 text-danger h4">@(Model.PersonCount - 7)</div>
         }
         <div class="col h4">
             (@Model.ActivePersonCount Active)
@@ -94,89 +94,90 @@
 
 }
 @section Scripts{
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        const ctxGenre = document.getElementById('genreChart');
-        const ctxRate = document.getElementById('rateChart');
-        var genres = JSON.parse('@genresJson');
-        var numbers = JSON.parse('@numbersJson');
-        var movies = JSON.parse('@moviesJson');
-        var rates = JSON.parse('@ratesJson');
-        var people = JSON.parse('@peopleJson');
-        var pRates = JSON.parse('@pRatesJson');
-        new Chart(ctxGenre, {
-            type: 'pie',
-            data: {
-                labels: genres,
-                datasets: [{
-                    label: 'Number of Movies',
-                    data: numbers,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        labels: {
-                            color: 'rgb(0, 0, 0)'
+            <script>
+                const ctxGenre = document.getElementById('genreChart');
+                const ctxRate = document.getElementById('rateChart');
+                var genres = JSON.parse('@genresJson');
+                var numbers = JSON.parse('@numbersJson');
+                var movies = JSON.parse('@moviesJson');
+                var rates = JSON.parse('@ratesJson');
+                var people = JSON.parse('@peopleJson');
+                var pRates = JSON.parse('@pRatesJson');
+                new Chart(ctxGenre, {
+                    type: 'pie',
+                    data: {
+                        labels: genres,
+                        datasets: [{
+                            label: 'Number of Movies',
+                            data: numbers,
+                            borderWidth: 1,
+                            backgroundColor: ['#BBD6B8', '#97DEFF', '#F7C04A', '#865DFF', '#DFFFD8', '#FFB84C', '#F7EFE5']
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: 'rgb(0, 0, 0)'
+                                }
+                            }
                         }
                     }
-                }
-            }
-        });
-        var barColors = ["blue", "green", "yellow", "orange", "red"];
+                });
+                var barColors = ["blue", "green", "yellow", "orange", "red"];
 
-        new Chart("rateChart", {
-            type: "bar",
-            data: {
-                labels: movies,
-                datasets: [{
-                    barThickness: 40,
-                    minBarLength: 0,
-                    backgroundColor: barColors,
-                    data: rates
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                new Chart("rateChart", {
+                    type: "bar",
+                    data: {
+                        labels: movies,
+                        datasets: [{
+                            barThickness: 40,
+                            minBarLength: 0,
+                            backgroundColor: barColors,
+                            data: rates
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
                     }
-                },
-                plugins: {
-                    legend: {
-                        display: false
+                });
+                new Chart("activePersonChart", {
+                    type: 'bar',
+                    data: {
+                        datasets: [{
+                            label: 'Bar Dataset',
+                            data: pRates,
+                            // this dataset is drawn below
+                            order: 2
+                        }],
+                        labels: people
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
                     }
-                }
-            }
-        });
-        new Chart("activePersonChart", {
-            type: 'bar',
-            data: {
-                datasets: [{
-                    label: 'Bar Dataset',
-                    data: pRates,
-                    // this dataset is drawn below
-                    order: 2
-                }],
-                labels: people
-            },
-            options: {
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
+                });
 
-    </script>
+            </script>
 }
