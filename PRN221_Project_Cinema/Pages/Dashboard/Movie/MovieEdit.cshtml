@@ -18,6 +18,7 @@
             <fieldset class="border rounded-3 p-3">
                 <legend class="float-none w-auto px-3">Edit movie information</legend>
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Movie.MovieId" />
                 <div class="form-group mb-3">
                     <label asp-for="Movie.Title" class="control-label">Title</label>
                     <input asp-for="Movie.Title" class="form-control" />
