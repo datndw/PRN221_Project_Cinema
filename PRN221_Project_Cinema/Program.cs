@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema;
 using PRN221_Project_Cinema.Models;
@@ -9,6 +10,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddSignalR();
 builder.Services.AddDbContext<PRN221_Project_CinemaContext>(options => options.UseSqlServer
 (builder.Configuration.GetConnectionString("PRN221_Project_Cinema")));
+builder.Services.AddSession();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,8 +28,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseSession();
 app.MapRazorPages();
 app.MapHub<CinemaHub>("/cinemaHub");
 app.Run();
