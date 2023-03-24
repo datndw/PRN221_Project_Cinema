@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using PRN221_Project_Cinema.Models;
 
 namespace PRN221_Project_Cinema.Pages
@@ -7,12 +8,16 @@ namespace PRN221_Project_Cinema.Pages
     public class GenreCreateModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;
+        private readonly IHubContext<CinemaHub> _hubContext;
+        
         [BindProperty]
         public List<Genre> Genres { get; set; }
-        public GenreCreateModel(PRN221_Project_CinemaContext context)
+        public GenreCreateModel(PRN221_Project_CinemaContext context, IHubContext<CinemaHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
+       
         public IActionResult OnGet()
         {
             return Page();
@@ -30,6 +35,7 @@ namespace PRN221_Project_Cinema.Pages
 
             _context.Genres.Add(Genre);
             await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("ReloadMovie");
 
             return RedirectToPage("./Genre");
         }

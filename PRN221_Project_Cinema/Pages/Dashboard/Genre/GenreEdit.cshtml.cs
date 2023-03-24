@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
 
@@ -8,10 +9,12 @@ namespace PRN221_Project_Cinema.Pages
     public class GenreEditModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;
+        private readonly IHubContext<CinemaHub> _hubContext;
 
-        public GenreEditModel(PRN221_Project_CinemaContext context)
+        public GenreEditModel(PRN221_Project_CinemaContext context, IHubContext<CinemaHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         [BindProperty]
@@ -44,6 +47,7 @@ namespace PRN221_Project_Cinema.Pages
             try
             {
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("ReloadMovie");
             }
             catch (DbUpdateConcurrencyException)
             {

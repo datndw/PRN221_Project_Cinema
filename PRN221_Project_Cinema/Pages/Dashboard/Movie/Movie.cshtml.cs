@@ -20,7 +20,7 @@ namespace PRN221_Project_Cinema.Pages
         [BindProperty(SupportsGet = true)]
         public string MovieSearch { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             if (_context.Movies != null)
             {
@@ -34,6 +34,8 @@ namespace PRN221_Project_Cinema.Pages
                     .Contains(MovieSearch.ToLower()))
                     .ToList();
             }
+
+            return Page();
         }
     }
 }
