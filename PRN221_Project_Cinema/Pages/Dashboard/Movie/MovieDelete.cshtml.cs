@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using PRN221_Project_Cinema.Models;
 
@@ -8,11 +9,14 @@ namespace PRN221_Project_Cinema.Pages
     public class MovieDeleteModel : PageModel
     {
         private readonly PRN221_Project_CinemaContext _context;
+        private readonly IHubContext<CinemaHub> _hubContext;
+        
         [BindProperty]
         public Movie Movie { get; set; }
-        public MovieDeleteModel(PRN221_Project_CinemaContext context)
+        public MovieDeleteModel(PRN221_Project_CinemaContext context, IHubContext<CinemaHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -21,7 +25,7 @@ namespace PRN221_Project_Cinema.Pages
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieId == id);
+            var movie = await _context.Movies.Include(m=>m.Genre).FirstOrDefaultAsync(m => m.MovieId == id);
 
             if (movie == null)
             {
@@ -47,6 +51,7 @@ namespace PRN221_Project_Cinema.Pages
                 Movie = movie;
                 _context.Movies.Remove(Movie);
                 await _context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("ReloadMovie");
             }
 
             return RedirectToPage("./Movie");

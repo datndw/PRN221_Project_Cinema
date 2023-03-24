@@ -4,45 +4,36 @@
     Layout = "_DashboardLayout";
     ViewData["Title"] = "Movie Details";
 }
-<h1>Details</h1>
+<div class="container text-center">
+    <h3 class="my-4">Movie Details</h3>
+    <div>
+        <hr />
+        <table class="table table-bordered">
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Title)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Title)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Year)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Year)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Image)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Image)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Description)</td>
+                <td class="p-3 text-start">@Html.DisplayFor(model => model.Movie.Description)</td>
+            </tr>
+            <tr>
+                <td class="p-3 fw-bold">@Html.DisplayNameFor(model => model.Movie.Genre)</td>
+                <td class="p-3">@Html.DisplayFor(model => model.Movie.Genre.Description)</td>
+            </tr>
+        </table>
 
-<div>
-    <h4>Movie</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Year)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Year)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Image)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Image)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie.Genre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.Genre.GenreId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./MovieEdit" asp-route-id="@Model.Movie?.MovieId">Edit</a> |
-    <a asp-page="./Movie">Back to Movie List</a>
+        <div>
+            <a class="btn btn-warning" asp-page="./MovieEdit" asp-route-id="@Model.Movie?.MovieId">Edit This Movie</a> |
+            <a class="btn btn-primary" asp-page="./Movie">Back to Movie List</a>
+        </div>
+    </div>
 </div>
