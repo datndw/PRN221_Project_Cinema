@@ -39,7 +39,7 @@
                     <span asp-validation-for="@Model.CurrentRate.NumericRating" class="text-danger"></span><br />
                     <label asp-for="@Model.CurrentRate.Comment">Bình luận:</label>
                     <textarea asp-for="@Model.CurrentRate.Comment" style="height: 100px" class="w-100 d-block">
-                                </textarea>
+                                    </textarea>
                     <span asp-validation-for="@Model.CurrentRate.Comment" class="text-danger"></span>
 
 
@@ -67,12 +67,10 @@
 
                         <i class="d-block">@item.Time</i>
 
-                   
+
                         @if (HttpContext.Session.GetString("email") != null && item.Person.Email == HttpContext.Session.GetString("email"))
                         {
-                            <form method="post" asp-action="DeleteComment" asp-route-id="@item.Comment">
-                                <input type="submit" class="btn btn-danger" value="Xóa" />
-                            </form>
+                            <a class="btn btn-danger" href="./DeleteComment?mId=@item.MovieId&pId=@item.Person.PersonId">Xóa</a>
                         }
                     </div>
                 }

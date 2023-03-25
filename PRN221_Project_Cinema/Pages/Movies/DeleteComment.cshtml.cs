@@ -13,27 +13,43 @@ namespace PRN221_Project_Cinema.Pages.Movies
         private readonly IHubContext<CinemaHub> _hubContext;
 
         [BindProperty]
-        public Genre Genre { get; set; }
+        public Rate Rate { get; set; }
         public DeleteCommentModel(PRN221_Project_CinemaContext context, IHubContext<CinemaHub> hubContext)
         {
             _context = context;
             _hubContext = hubContext;
         }
-        public async Task<IActionResult> OnPostDeleteCommentAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int? mId, int? pId)
         {
-            var comment = await _context.Rates.FindAsync(id);
-
-            if (comment == null)
+            if (mId == null || pId == null)
             {
                 return NotFound();
             }
-            else
+
+            Rate = _context.Rates
+                .FirstOrDefault(r => r.MovieId == mId & r.PersonId == pId);
+
+            foreach (var item in _context.Movies.Include(m => m.Rates).ToList())
             {
-                _context.Rates.Remove(comment);
-                await _context.SaveChangesAsync();
-                await _hubContext.Clients.All.SendAsync("ReloadMovie");
+                if (item.Rates.Contains(Rate))
+                {
+                    item.Rates.Remove(Rate);
+                }
             }
-            return RedirectToPage("/Movies/Details", new { id = comment.MovieId });
+
+            foreach (var item in _context.Persons.Include(p => p.Rates).ToList())
+            {
+                if (item.Rates.Contains(Rate))
+                {
+                    item.Rates.Remove(Rate);
+                }
+            }
+
+            _context.Rates.Remove(Rate);
+            await _context.SaveChangesAsync();
+            await _hubContext.Clients.All.SendAsync("ReloadMovie");
+
+            return RedirectToPage("/Movies/Details", new { id = mId.ToString() });
         }
     }
 }
