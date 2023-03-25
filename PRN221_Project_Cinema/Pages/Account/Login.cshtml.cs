@@ -76,6 +76,7 @@ namespace PRN221_Project_Cinema.Pages.Account
             HttpContext.Session.Remove("email");
             await HttpContext.SignOutAsync(scheme);
             return RedirectToPage("../Index");
+
         }
     }
 }

@@ -26,6 +26,12 @@
                     @if (Context.Session.GetString("email") != null)
                     {
                         <span>Xin chào @Context.Session.GetString("fullname")<text>&nbsp;</text></span>
+                        <form asp-page="/Account/ChangePassword" method="get">
+                            <button class="ml-2 btn btn-outline-success" type="submit">
+                                Change Pass
+                            </button>
+                        </form>
+                        <text>&nbsp;</text>
                         <form asp-page="/Account/Login" method="post" asp-page-handler="Logout">
                             <button class="ml-2 btn btn-outline-success" type="submit">
                                 Logout
