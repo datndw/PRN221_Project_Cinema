@@ -34,7 +34,7 @@
                 <form method="post">
                     <h2>Chi tiết đánh giá:</h2>
                     <label asp-for="@Model.CurrentRate.NumericRating">Điểm đánh giá: </label>
-                    <input asp-for="@Model.CurrentRate.NumericRating" class="d-inline mx-4" type="number" />
+                    <input asp-for="@Model.CurrentRate.NumericRating" class="d-inline mx-4" type="number" step="0.1"/>
                     <br />
                     <span asp-validation-for="@Model.CurrentRate.NumericRating" class="text-danger"></span><br />
                     <label asp-for="@Model.CurrentRate.Comment">Bình luận:</label>

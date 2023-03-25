@@ -32,16 +32,16 @@
 
                     @if (Context.Session.GetString("email") != null)
                     {
-                        <span>Xin chào @Context.Session.GetString("fullname")</span>
+                        <span class="text-light">Xin chào @Context.Session.GetString("fullname")<text>&nbsp;</text></span>
                         <form asp-page="/Account/Login" method="post" asp-page-handler="Logout">
-                            <button class="ml-2 btn btn-outline-dark" type="submit">
-                                Logout
+                            <button class="ml-2 btn btn-outline-dark text-light" type="submit">
+                                Logout  
                             </button>
                         </form>
                     }
                     else
                     {
-                        <button class="btn btn-outline-success" onclick="window.location.href='/Account/Login'" type="submit">
+                        <button class="btn btn-outline-success text-light" onclick="window.location.href='/Account/Login'" type="submit">
                             Login
                         </button>
                     }

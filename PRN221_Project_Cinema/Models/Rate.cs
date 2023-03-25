@@ -13,6 +13,7 @@ namespace PRN221_Project_Cinema.Models
         public string? Comment { get; set; }
 
         [Required(ErrorMessage = "Hãy đánh giá điểm cho bộ phim nhé!")]
+        [Range(0, 10, ErrorMessage = "Hãy sử dụng thang điểm 10 để đánh giá bạn nhé!")]
         public double? NumericRating { get; set; }
         public DateTime? Time { get; set; }
 
