@@ -29,22 +29,6 @@ namespace PRN221_Project_Cinema.Pages.Movies
             Rate = _context.Rates
                 .FirstOrDefault(r => r.MovieId == mId & r.PersonId == pId);
 
-            foreach (var item in _context.Movies.Include(m => m.Rates).ToList())
-            {
-                if (item.Rates.Contains(Rate))
-                {
-                    item.Rates.Remove(Rate);
-                }
-            }
-
-            foreach (var item in _context.Persons.Include(p => p.Rates).ToList())
-            {
-                if (item.Rates.Contains(Rate))
-                {
-                    item.Rates.Remove(Rate);
-                }
-            }
-
             _context.Rates.Remove(Rate);
             await _context.SaveChangesAsync();
             await _hubContext.Clients.All.SendAsync("ReloadMovie");

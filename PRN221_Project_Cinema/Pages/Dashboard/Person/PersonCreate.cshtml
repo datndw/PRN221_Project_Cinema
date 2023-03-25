@@ -26,7 +26,11 @@
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Person.Gender" class="control-label"></label>
-                    <input asp-for="Person.Gender" class="form-control" />
+                    <select asp-for="Person.Gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
                     <span asp-validation-for="Person.Gender" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
@@ -36,17 +40,23 @@
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Person.Password" class="control-label"></label>
-                    <input asp-for="Person.Password" class="form-control" />
+                    <input asp-for="Person.Password" class="form-control" type="password" />
                     <span asp-validation-for="Person.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Person.Type" class="control-label"></label>
-                    <input asp-for="Person.Type" class="form-control" />
+                    <select asp-for="Person.Type" class="form-control">
+                        <option value="1">Admin</option>
+                        <option value="2">Member</option>
+                    </select>
                     <span asp-validation-for="Person.Type" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
                     <label asp-for="Person.IsActive" class="control-label"></label>
-                    <input asp-for="Person.IsActive" class="form-control" />
+                    <select asp-for="Person.IsActive" class="form-control">
+                        <option value="True">Active</option>
+                        <option value="False">Inactive</option>
+                    </select>
                     <span asp-validation-for="Person.IsActive" class="text-danger"></span>
                 </div>
                 <div class="form-group mb-3">
