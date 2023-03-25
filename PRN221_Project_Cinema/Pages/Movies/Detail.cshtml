@@ -20,7 +20,7 @@
             <br />
             <span class="fw-bold">Điểm đánh giá:</span>
             <span>
-                @(Model.RateList != null ? Model.RateList.Average(r => r.NumericRating) : "Chưa có điểm đánh giá")
+                @(Model.RateList.Count!=0 ? Model.RateList.Average(r => r.NumericRating) : "Chưa có điểm đánh giá")
             </span>
             <br />
             <span class="fw-bold">Mô tả:</span>
@@ -39,7 +39,7 @@
                     <span asp-validation-for="@Model.CurrentRate.NumericRating" class="text-danger"></span><br />
                     <label asp-for="@Model.CurrentRate.Comment">Bình luận:</label>
                     <textarea asp-for="@Model.CurrentRate.Comment" style="height: 100px" class="w-100 d-block">
-                                    </textarea>
+                                        </textarea>
                     <span asp-validation-for="@Model.CurrentRate.Comment" class="text-danger"></span>
 
 
@@ -50,7 +50,7 @@
             }
 
             <h2>Bình luận:</h2>
-            @if (Model.RateList == null)
+            @if (Model.RateList.Count == 0)
             {
                 <span>Chưa có bình luận cho phim này</span>
             }
