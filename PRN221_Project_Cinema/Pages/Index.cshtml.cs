@@ -44,7 +44,8 @@ namespace PRN221_Project_Cinema.Pages
 
             var identityValue = (ClaimsIdentity)User.Identity;
             IEnumerable<Claim> claims = identityValue.Claims;
-            if(claims.Any()) {
+            if (claims.Any())
+            {
                 HttpContext.Session.SetString("email", claims.First().Value);
                 HttpContext.Session.SetString("fullname", claims.ElementAt(1).Value);
                 var role = claims.ElementAt(2).Value;
@@ -55,12 +56,12 @@ namespace PRN221_Project_Cinema.Pages
                 }
             }
 
-           
+
             Movies = _context.Movies
                 .Include(m => m.Rates)
                 .ToList();
             const int pageSize = 6;
-           
+
 
             totalMovies = _context.Movies.Count();
             // set the page to CurrentPage when user clicks another link
@@ -72,17 +73,19 @@ namespace PRN221_Project_Cinema.Pages
             if (!string.IsNullOrEmpty(film))
             {
                 Movies = _context.Movies.Where(m => m.Title.Contains(film)).Include(m => m.Rates).ToList();
+                totalMovies = Movies.Count();
             }
             if (!string.IsNullOrEmpty(GenreId))
             {
                 Movies = _context.Movies.Where(m => m.GenreId == int.Parse(GenreId)).Include(m => m.Rates).ToList();
+                totalMovies = Movies.Count();
             }
             Genres = _context.Genres.ToList();
             RateList = _context.Rates.ToList();
 
             return Page();
         }
-       
+
 
     }
 }
