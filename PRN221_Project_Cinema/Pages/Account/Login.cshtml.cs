@@ -18,8 +18,13 @@ namespace PRN221_Project_Cinema.Pages.Account
 
         [BindProperty]
         public Person person { get; set; }
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("email") != null)
+            {
+                return RedirectToPage("/Index");
+            }
+            return Page();
         }
 
         public async Task<IActionResult> OnPost(Person? person)
