@@ -3,6 +3,7 @@
 @model PRN221_Project_Cinema.Pages.Account.RegisterModel
 @{
     ViewData["Title"] = "Login to Cinema Hub";
+    Layout = "_Layout1";
 }
 
 
@@ -12,7 +13,7 @@
     <form asp-page="/Register" method="post">
         <div class="mb-2">
             <label class="form-label fw-bold">Full Name *</label>
-            <input class="form-control"
+            <input required class="form-control"
                    type="text"
                    placeholder="Enter your name"
                    asp-for="@Model.person.Fullname" />
@@ -20,7 +21,7 @@
         </div>
         <div class="mb-2">
             <label class="form-label fw-bold">Email Address *</label>
-            <input class="form-control"
+            <input required class="form-control"
                    type="email"
                    placeholder="Enter email address"
                    asp-for="@Model.person.Email" />
@@ -36,7 +37,7 @@
         </div>
         <div class="mb-4">
             <label class="form-label fw-bold">Password *</label>
-            <input class="form-control"
+            <input required class="form-control"
                    type="password"
                    placeholder="*******"
                    asp-for="@Model.person.Password" />
@@ -45,7 +46,7 @@
 
         <div class="mb-4">
             <label class="form-label fw-bold">Confirm password *</label>
-            <input class="form-control"
+            <input required class="form-control"
                    type="password"
                    placeholder="*******"
                    name="confirmPass"/>

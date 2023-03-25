@@ -1,0 +1,71 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PRN221_Project_Cinema</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PRN221_Project_Cinema.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/Index">Cinema Hub</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+               @* <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/Index">Home</a>
+                        </li>
+                    </ul>
+                    @if (Context.Session.GetString("email") != null)
+                    {
+                        <span>Xin chào @Context.Session.GetString("fullname")<text>&nbsp;</text></span>
+                        <form asp-page="/Account/ChangePassword" method="get">
+                            <button class="ml-2 btn btn-outline-success" type="submit">
+                                Change Pass
+                            </button>
+                        </form>
+                        <text>&nbsp;</text>
+                        <form asp-page="/Account/Login" method="post" asp-page-handler="Logout">
+                            <button class="ml-2 btn btn-outline-success" type="submit">
+                                Logout
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-outline-success" onclick="window.location.href='/Account/Login'" type="submit">
+                            Login
+                        </button>
+                    }
+                </div>*@
+            </div>
+        </nav>
+
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            Cinema Hub - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
