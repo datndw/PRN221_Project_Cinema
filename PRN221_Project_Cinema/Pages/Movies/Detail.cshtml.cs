@@ -53,7 +53,7 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 }
             }
 
-            
+
             return Page();
         }
 
@@ -74,17 +74,19 @@ namespace PRN221_Project_Cinema.Pages.Movies
             {
                 var a = HttpContext.Session.GetString("email");
                 Person person = null;
-                if (a != null) {
+                if (a != null)
+                {
                     person = await _context.Persons.FirstOrDefaultAsync(x => x.Email == a);
                     RawRate = await _context.Rates.Where(r => r.PersonId == person.PersonId).Where(r => r.MovieId == MovieId).FirstOrDefaultAsync();
                 }
 
-                
+
                 if (RawRate == null)
                 {
                     CurrentRate.MovieId = MovieId;
                     CurrentRate.PersonId = person.PersonId;
                     CurrentRate.Time = DateTime.Now;
+
                     _context.Rates.Add(CurrentRate);
                 }
                 else
@@ -92,10 +94,13 @@ namespace PRN221_Project_Cinema.Pages.Movies
                     RawRate.NumericRating = CurrentRate.NumericRating;
                     RawRate.Comment = CurrentRate.Comment;
                     RawRate.Time = DateTime.Now;
+
                     _context.Rates.Update(RawRate);
                 }
+                
                 await _context.SaveChangesAsync();
                 await _hub.Clients.All.SendAsync("ReloadMovie", await _context.Rates.ToListAsync());
+
             }
 
             return RedirectToPage("./Detail", new { id = MovieId.ToString() });
