@@ -84,12 +84,14 @@ namespace PRN221_Project_Cinema.Pages.Movies
                 {
                     CurrentRate.MovieId = MovieId;
                     CurrentRate.PersonId = person.PersonId;
+                    CurrentRate.Time = DateTime.Now;
                     _context.Rates.Add(CurrentRate);
                 }
                 else
                 {
                     RawRate.NumericRating = CurrentRate.NumericRating;
                     RawRate.Comment = CurrentRate.Comment;
+                    RawRate.Time = DateTime.Now;
                     _context.Rates.Update(RawRate);
                 }
                 await _context.SaveChangesAsync();

@@ -56,7 +56,9 @@ namespace PRN221_Project_Cinema.Pages
             }
 
            
-            Movies = _context.Movies.ToList();
+            Movies = _context.Movies
+                .Include(m => m.Rates)
+                .ToList();
             const int pageSize = 6;
            
 
@@ -69,11 +71,11 @@ namespace PRN221_Project_Cinema.Pages
 
             if (!string.IsNullOrEmpty(film))
             {
-                Movies = _context.Movies.Where(m => m.Title.Contains(film)).ToList();
+                Movies = _context.Movies.Where(m => m.Title.Contains(film)).Include(m => m.Rates).ToList();
             }
             if (!string.IsNullOrEmpty(GenreId))
             {
-                Movies = _context.Movies.Where(m => m.GenreId == int.Parse(GenreId)).ToList();
+                Movies = _context.Movies.Where(m => m.GenreId == int.Parse(GenreId)).Include(m => m.Rates).ToList();
             }
             Genres = _context.Genres.ToList();
             RateList = _context.Rates.ToList();

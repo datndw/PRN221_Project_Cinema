@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <form>
                     <div class="d-inline-flex">
-                        <input type="text" class="form-control" asp-for="film" placeholder="Search your movie">
+                        <input type="text" class="form-control" asp-for="film" placeholder="Nhập tên phim">
                         <button type="submit" class="btn btn-primary mx-2">Tìm kiếm</button>
                     </div>
                 </form>
@@ -53,7 +53,7 @@
                                     <p class="card-text">
                                         Năm: @movie.Year <br />
                                         Loại: @movie.Genre.Description <br />
-                                        Điểm: @(movie.Rates == null ? movie.Rates.Average(r => r.NumericRating) : "N/A")
+                                        Điểm: @(movie.Rates.Count != 0 ? movie.Rates.Average(r => r.NumericRating) : "N/A")
                                     </p>
                                 </div>
 
