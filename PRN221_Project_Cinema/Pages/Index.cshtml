@@ -53,7 +53,7 @@
                                     <p class="card-text">
                                         Năm: @movie.Year <br />
                                         Loại: @movie.Genre.Description <br />
-                                        Điểm: @(movie.Rates.Count != 0 ? movie.Rates.Average(r => r.NumericRating) : "N/A")
+                                        Điểm: @(movie.Rates.Count != 0 ? Math.Round((double)movie.Rates.Average(r => r.NumericRating),1) : "N/A")
                                     </p>
                                 </div>
 
